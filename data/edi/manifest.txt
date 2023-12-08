@@ -1,0 +1,8 @@
+Manifest file for edi.988.8.zip created on Fri Dec 08 17:04:01 UTC 2023
+event.csv (792833 bytes)
+occurrence.csv (7921178 bytes)
+extendedmeasurementorfact.csv (9794359 bytes)
+meta.xml (2928 bytes)
+edi.988.8.xml (85211 bytes)
+edi.988.8.txt (38363 bytes)
+edi.988.8.report.xml (57748 bytes)

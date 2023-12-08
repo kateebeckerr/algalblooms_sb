@@ -1,0 +1,249 @@
+---
+title: "algalblooms_analysis"
+author: "Kate Becker"
+date: "2023-12-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(here)
+library(janitor)
+library(dplyr)
+library(lubridate)
+library(sf)
+library(terra)
+library(spData)
+library(spDataLarge)
+library(maps)
+library(stringr)
+library(viridis)
+library(gstat)
+library(sp)
+library(automap)
+library(tufte)
+library(feasts)
+library(forecast)
+library(tsibble)
+library(tsibble)
+library(feasts)
+library(tmap)
+library(zoo)
+library(spData)
+
+```
+
+```{r}
+rm(list = ls())
+here::i_am("algae_temp_analysis.Rmd")
+setwd(here())
+```
+
+```{r}
+algal_events <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/edi/event.csv")
+algal_measure <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/edi/extendedmeasurementorfact.csv")
+algal_occurence <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/edi/occurrence.csv")
+santa_barbara <- st_read(here("data", "tl_2019_06083_faces", "tl_2019_06083_faces.shp"))
+sst <- readr::read_csv(here("data", "sst", "sst_original_data.csv"))
+```
+
+```{r}
+sst_filter <- sst %>%
+  mutate(year = format(date, "%Y"))
+
+updated_sst <- sst_filter %>%
+  filter(year >= 2007 & year <= 2022)
+
+```
+
+```{r}
+ggplot(data = updated_sst, aes(x = date, y = temp)) +
+  geom_point()
+```
+
+```{r}
+summary(lm(temp ~ date, data = sst_filter))
+```
+
+
+```{r}
+# Random exploration 
+sst_ma <- sst_filter %>% mutate(ma = slider::slide_dbl(temp, mean,
+                .before = 2, .after = 2, .complete = TRUE))
+
+# Plot the original time series
+ggplot() +
+  geom_line(data = sst_filter, aes(x = date, y = temp), color = "blue") +
+  geom_line(data = sst_ma, aes(x = date, y = ma), color = "red") +
+  labs(title = "Time Series with Moving Average")
+
+```
+
+```{r}
+acf(sst_filter$temp, lag.max=12)
+```
+
+
+```{r}
+sst_ma <- sst_ma %>%
+  mutate(datetime = as_datetime(sst_filter$date))
+
+df_averaged <- sst_ma %>%
+  group_by(datetime) %>%
+  summarise(mean_value = mean(temp))
+
+
+#decomp = as_tsibble(df_averaged)
+
+class(df_averaged$mean_values)
+```
+
+```{r}
+sst_filter <- sst_filter %>%
+  mutate(index = as.Date(date))
+
+sst_filter <- na.omit(sst_filter)
+
+sst_filter <- sst_filter %>%
+  arrange(index)
+
+sst_filter <- sst_filter %>%
+  mutate(index = as.Date(date),
+         temp = as.numeric(temp))
+
+sst_site1 <- sst_filter %>%
+  filter(site == "SITE1")
+
+sst_filter1 <- sst_site1 %>%
+  mutate(index = as.Date(date))
+
+sst_filter1 <- na.omit(sst_filter1)
+
+sst_filter <- sst_filter1 %>%
+  arrange(index)
+
+sst_filter1 <- sst_filter1 %>%
+  mutate(index = as.Date(date),
+         temp = as.numeric(temp))
+
+```
+
+```{r}
+names_algae <- algal_occurence %>%
+  group_by(organismName) %>%
+  na.omit()
+
+pseudo_algae <- algal_occurence %>%
+  filter(organismName == "Pseudo_nitzschia_seriata_group")
+
+join <- left_join(pseudo_algae, algal_events, by = "id")
+
+join_stearns <- join %>%
+  filter(locationID == "HABs-StearnsWharf") %>%
+  mutate(year = format(eventDate, "%Y"))
+
+date_join_stearns <- left_join(join_stearns, updated_sst, by ="year")
+
+join <- join[complete.cases(join$decimalLatitude, join$decimalLongitude), ]
+join_sf <- st_as_sf(join, coords = c("decimalLatitude", "decimalLongitude"), crs = 4326)
+
+ggplot(data = join_stearns, aes(x = eventDate, y = organismQuantity)) +
+  geom_point()
+
+
+```
+
+```{r}
+#ggplot() +
+  #geom_line(data = stearns_ma, aes(x = eventDate, y = organismQuantity), color = "blue") +
+  #geom_line(data = stearns_ma, aes(x = eventDate, y = ma), color = "red") +
+  #labs(title = "Time Series with Moving Average")
+
+#class(stearns_ma$eventDate)
+
+#decomp_stearn <- date_join_stearns %>%
+  #mutate(y_m = yearmonth(date)) %>%
+  #group_by(y_m) %>%
+  #summarise(total_quant = sum(organismQuantity, na.rm = TRUE)) %>%
+  #mutate(total_quant = )
+  #as_tsibble(index = y_m)
+  
+```
+```{r}
+date_join_stearns <- date_join_stearns %>%
+  mutate(y_m = yearmonth(date)) %>%
+  filter(!is.na(date))
+
+```
+
+
+```{r}
+decomp_stearn <- date_join_stearns %>%
+  filter(!is.na(date)) %>%
+  mutate(y_m = yearmonth(date)) %>%
+  group_by(y_m) %>%
+  summarise(total_quant = sum(organismQuantity, na.rm = TRUE)) %>%
+  mutate(total_quant = na.approx(total_quant)) %>%
+  as_tsibble(index = y_m)
+```
+
+
+```{r}
+decomp_stearn %>% model(
+    STL(total_quant)
+  ) %>%
+  components() %>%
+  autoplot()+
+  labs(title = "stearn")
+```
+
+```{r}
+total_data <- left_join(date_join_stearns, decomp_stearn, by = "y_m")
+```
+
+```{r}
+ggplot(data = total_data, aes(x = temp, y = total_quant)) +
+  geom_point()
+```
+
+```{r}
+summary(lm(total_quant ~ y_m, data = decomp_stearn))
+```
+
+```{r}
+summary(lm(total_quant ~ temp, data = total_data))
+```
+
+
+```{r}
+#California data wrangling 
+usa <- map_data("usa") # we already did this, but we can do it again
+ggplot() + 
+  geom_polygon(data = usa, aes(x = long, y = lat, group = group)) + 
+  coord_quickmap()
+
+state <- map_data("state")
+
+ca <- state %>%
+  filter(region %in% c("california"))
+
+ggplot(data = ca) + 
+  geom_polygon(aes(x = long, y = lat, group = group), fill = "palegreen", color = "black") + 
+  coord_quickmap()
+
+counties <- map_data("county")
+ca_county <- counties %>%
+  filter(region == "california")
+
+ca_counties <- ggplot(data = ca_county) + 
+  geom_polygon(aes(x = long, y = lat, group = group), fill = "palegreen", color = "black") + 
+  coord_quickmap()
+
+ca_counties
+```
+

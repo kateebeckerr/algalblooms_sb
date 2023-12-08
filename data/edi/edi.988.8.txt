@@ -1,0 +1,1471 @@
+
+  
+    uid=EDI,o=EDI,dc=edirepository,dc=orgall
+      uid=sccoos,o=EDI,dc=edirepository,dc=org
+      all
+    
+    
+      public
+      read
+    
+  
+  
+    doi:10.6073/pasta/84cfca8262c5f112a7d120da889078bbCalifornia Harmful Algal Bloom Monitoring and Alert Program Data (Darwin Core Archive format)
+    
+      Clarissa Anderson
+      University of California, San Diego
+      Co-PI and SCCOOS Executive Director
+      clrander@ucsd.edu
+    
+    
+      Mark Brzesinski
+      University of California, Santa Barbara
+      Professor
+      mark.brzezinski@lifesci.ucsb.edu
+    
+    
+      Dave Caron
+      University of Southern California
+      USC Associates Captain Allan Hancock Chair in Marine Science and Professor of Biological Sciences
+      dcaron@usc.edu
+    
+    
+      Melissa Carter
+      University of California, San Diego
+      Co-PI and Programmer Analyst
+      mlcarter@ucsd.edu
+    
+    
+      Janice Jones
+      University of California, Santa Barbara
+      Research Faculty
+      ja_jones@ucsb.edu
+    
+    
+      Raphael Kudela
+      University of California, Santa Cruz
+      Professor
+      kudela@uscs.edu
+    
+    
+      John Largier
+      University of California, Davis
+      Professor
+      jlargier@ucdavis.edu
+    
+    
+      Kendra Negrey
+      University of California, Santa Cruz
+      Lab Technician
+      khayashi@ucsc.edu
+    
+    
+      Alexis Pasulka
+      Cal Poly. San Luis Obispo
+      Assistant Professor
+      apasulka@calpoly.edu
+    
+    
+      Henry Ruhl
+      Monterey Bay Aquarium Research Institute
+      CENCOOS Director
+      hruhl@mbaru.org
+    
+    
+      Rebecca Shipe
+      University of California, Los Angeles
+      Adjunct Associate Professor
+      rshipe@ucla.edu
+    
+    
+      G. Jason Smith
+      Moss Landing Marine Labs
+      Research Faculty
+      jsmith@mlml.calstate.edu
+    
+    
+      Jayme Smith
+      Southern California Coastal Water Research Project
+      Scientist
+      jaymes@sccwrp.org
+    
+    
+      Joseph Tyburczy
+      University of California, San Diego
+      California Sea Grant Extension Specialist
+      jtyburczy@ucsd.edu
+    
+    
+      Ryan Walter
+      Cal Poly, San Luis Obispo
+      Assistant Professor
+      rkwalter@calpoly.edu
+    
+    
+      Libe Washburn
+      University of California, Santa Barbara
+      Professor
+      libe.washburn@ucsb.edu
+    
+    
+      Vicky Rowley
+      University of California, San Diego
+      SCCOOS Data Manager
+      vrowley@ucsd.edu
+    
+    
+      Clarissa Anderson
+      University of California, San Diego
+      Co-PI and SCCOOS Executive Director
+      clrander@ucsd.edu
+    
+    
+      Abigail Benson
+      U.S. Geological Survey
+      Biologist
+      albenson@usgs.gov
+      processor
+    
+    
+      Vicky Rowley
+      University of California, San Diego
+      SCCOOS Data Manager
+      vrowley@ucsd.edu
+      processor
+    
+    
+      Ian Brunjes
+      University of California, Santa Barbara
+      ianbrunjes@ucsb.edu
+      processor
+    
+    2022-06-10
+    eng
+    
+      The Harmful Algal Bloom Monitoring and Alert Program (HABMAP) was formed in 2008 and provides updates on current algal blooms and facilitates information exchange among scientists, federal and state managers, and the general public in California. A major component of this program is regional HAB monitoring with support from the Southern California Coastal Ocean Observing System (SCCOOS) and the Central and Northern California Ocean Observing System (CeNCOOS). Water samples and net tows are collected once per week at piers to monitor for HAB species, the neurotoxin domoic acid, and water quality data including temperature, chlorophyll-a, and nutrients.
+      The sampling stations represented in this dataset include Santa Cruz Wharf, Monterey Wharf, Cal Poly Pier, Stearns Wharf, Santa Monica Pier, Newport Beach Pier, and Scripps Pier. These data are consolidated and reformatted into Darwin Core Archive (DwC-A) format from the level 1 site-specific datasets hosted on the SCCOOS ERDDAP server: (https://erddap.sccoos.org/erddap/tabledap/index.html?page=1).
+    
+    
+      Samplingevent
+      GBIF Dataset Type Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_type.xml
+    
+    
+      marine, harvested by OBIS
+    
+    
+      This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.
+    
+    https://doi.org/10.6073/pasta/84cfca8262c5f112a7d120da889078bb
+      
+        Coast of California, United States
+        
+          -124.629
+          -116.631
+          42.033
+          32.25
+        
+      
+      
+        
+          
+            2005-06-03
+          
+          
+            2022-06-08
+          
+        
+      
+      
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Gymnodiniales
+                        109392
+                        
+                          Family
+                          Gymnodiniaceae
+                          109410
+                          
+                            Genus
+                            Akashiwo
+                            231787
+                            
+                              Species
+                              Akashiwo sanguinea
+                              232546
+                            
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Gonyaulacales
+                        109391
+                        
+                          Family
+                          Ostreopsidaceae
+                          109431
+                          
+                            Genus
+                            Alexandrium
+                            109470
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Gonyaulacales
+                        109391
+                        
+                          Family
+                          Ceratiaceae
+                          109421
+                          
+                            Genus
+                            Ceratium
+                            109506
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Gymnodiniales
+                        109392
+                        
+                          Family
+                          Gymnodiniaceae
+                          109410
+                          
+                            Genus
+                            Cochlodinium
+                            109474
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Dinophysiales
+                        109390
+                        
+                          Family
+                          Dinophysaceae
+                          231772
+                          
+                            Genus
+                            Dinophysis
+                            109462
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Gymnodiniales
+                        109392
+                        
+                          Family
+                          Gymnodiniaceae
+                          109410
+                          
+                            Genus
+                            Gymnodinium
+                            109475
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Gonyaulacales
+                        109391
+                        
+                          Family
+                          Gonyaulacaceae
+                          109428
+                          
+                            Genus
+                            Lingulodinium
+                            231799
+                            
+                              Species
+                              Lingulodinium polyedra
+                              233592
+                            
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Alveolata
+              536209
+              
+                Phylum
+                Myzozoa
+                450030
+                
+                  Subphylum
+                  Dinozoa
+                  562620
+                  
+                    Infraphylum
+                    Dinoflagellata
+                    dinoflagellates
+                    146203
+                    
+                      Class
+                      Dinophyceae
+                      dinoflagellates
+                      19542
+                      
+                        Order
+                        Prorocentrales
+                        109396
+                        
+                          Family
+                          Prorocentraceae
+                          109442
+                          
+                            Genus
+                            Prorocentrum
+                            109566
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Heterokonta
+              368898
+              
+                Phylum
+                Ochrophyta
+                yellow-green algae
+                345465
+                
+                  Subphylum
+                  Khakista
+                  576884
+                  
+                    Class
+                    Bacillariophyceae
+                    featherlike diatoms
+                    148899
+                    
+                      Subclass
+                      Bacillariophycidae
+                      148902
+                      
+                        Superorder
+                        Bacillariophycanae
+                        591186
+                        
+                          Order
+                          Bacillariales
+                          149001
+                          
+                            Family
+                            Bacillariaceae
+                            149002
+                            
+                              Genus
+                              Pseudo-nitzschia
+                              149151
+                              
+                                Species
+                                Pseudo-nitzschia delicatissima
+                                149153
+                              
+                            
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+        
+          Kingdom
+          Chromista
+          7
+          
+            Subkingdom
+            Harosa
+            582419
+            
+              Infrakingdom
+              Heterokonta
+              368898
+              
+                Phylum
+                Ochrophyta
+                yellow-green algae
+                345465
+                
+                  Subphylum
+                  Khakista
+                  576884
+                  
+                    Class
+                    Bacillariophyceae
+                    featherlike diatoms
+                    148899
+                    
+                      Subclass
+                      Bacillariophycidae
+                      148902
+                      
+                        Superorder
+                        Bacillariophycanae
+                        591186
+                        
+                          Order
+                          Bacillariales
+                          149001
+                          
+                            Family
+                            Bacillariaceae
+                            149002
+                            
+                              Genus
+                              Pseudo-nitzschia
+                              149151
+                              
+                                Species
+                                Pseudo-nitzschia seriata
+                                149152
+                              
+                            
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+          
+        
+      
+    
+    
+      
+        
+      
+      irregular
+    
+    
+      Clarissa Anderson
+      University of California, San Diego
+      Co-PI and SCCOOS Executive Director
+      clrander@ucsd.edu
+    
+    
+      Henry Ruhl
+      Monterey Bay Aquarium Research Institute
+      CENCOOS Director
+      hruhl@mbaru.org
+    
+    
+    Environmental Data Initiativeinfo@edirepository.orghttps://edirepository.org0330j0z60Environmental Data Initiative
+      event
+      DwC-A Event Table
+      
+        event.csv
+        792833
+        
+          
+            text/csv
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/edi/988/8/4119639092e62c55ea8be348e4d9260d
+          
+        
+      
+      
+        http://purl.obolibrary.org/obo/IAO_0000136
+        http://rs.tdwg.org/dwc/terms/Event
+      
+      
+        
+          id
+          NA
+          Row identifier
+          
+            
+              
+                
+                  Row identifier
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            NA
+            NA
+          
+        
+        
+          eventID
+          NA
+          An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set.
+          
+            
+              
+                
+                  An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/eventID
+          
+        
+        
+          eventDate
+          NA
+          The date-time or interval during which an Event occurred. For occurrences, this is the date-time when the event was recorded. Not suitable for a time in a geological context.
+          
+            
+              YYYY-MM-DD
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/eventDate
+          
+        
+        
+          geodeticDatum
+          NA
+          The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in decimalLatitude and decimalLongitude as based.
+          
+            
+              
+                
+                  The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in decimalLatitude and decimalLongitude as based.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/geodeticDatum
+          
+        
+        
+          countryCode
+          NA
+          The standard code for the country in which the Location occurs.
+          
+            
+              
+                
+                  The standard code for the country in which the Location occurs.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/countryCode
+          
+        
+        
+          eventRemarks
+          NA
+          Comments or notes about the Event.
+          
+            
+              
+                
+                  Comments or notes about the Event.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/eventRemarks
+          
+        
+        
+          decimalLatitude
+          NA
+          The geographic latitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, inclusive.
+          
+            
+              
+                degree
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/decimalLatitude
+          
+        
+        
+          decimalLongitude
+          NA
+          The geographic longitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between -180 and 180, inclusive.
+          
+            
+              
+                degree
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/decimalLongitude
+          
+        
+        
+          locationId
+          NA
+          An identifier for the set of location information (data associated with dcterms:Location). May be a global unique identifier or an identifier specific to the data set.
+          
+            
+              
+                
+                  An identifier for the set of location information (data associated with dcterms:Location). May be a global unique identifier or an identifier specific to the data set.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/locationID
+          
+        
+        
+          minimumDepthInMeters
+          NA
+          The lesser depth of a range of depth below the local surface, in meters.
+          
+            
+              
+                meter
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/minimumDepthInMeters
+          
+        
+        
+          maximumDepthInMeters
+          NA
+          The greater depth of a range of depth below the local surface, in meters.
+          
+            
+              
+                meter
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/maximumDepthInMeters
+          
+        
+        
+          coordinateUncertaintyInMeters
+          NA
+          The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (because there are no coordinates). Zero is not a valid value for this term.
+          
+            
+              
+                meter
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters
+          
+        
+      
+      4448
+    
+    
+      occurrence
+      DwC-A Occurrence Table
+      
+        occurrence.csv
+        7921178
+        
+          
+            text/csv
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/edi/988/8/7ad56af78ac5f73d81f5e80293f1d6c9
+          
+        
+      
+      
+        
+          id
+          NA
+          Row identifier
+          
+            
+              
+                
+                  Row identifier
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            NA
+            NA
+          
+        
+        
+          basisOfRecord
+          NA
+          The specific nature of the data record.
+          
+            
+              
+                
+                  The specific nature of the data record.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/basisOfRecord
+          
+        
+        
+          organismName
+          A textual name or label assigned to an Organism instance.
+          
+            
+              
+                
+                  A textual name or label assigned to an Organism instance.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/organismName
+          
+        
+        
+          organismQuantity
+          A number or enumeration value for the quantity of organisms.
+          
+            
+              
+                number
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/organismQuantity
+          
+        
+        
+          organismQuantityType
+          The type of quantification system used for the quantity of organisms.
+          
+            
+              
+                
+                  The type of quantification system used for the quantity of organisms.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/iri/organismQuantityType
+          
+        
+        
+          occurrenceID
+          NA
+          An identifier for the Occurrence (as opposed to a particular digital record of the occurrence). In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make the occurrenceID globally unique.
+          
+            
+              
+                
+                  An identifier for the Occurrence (as opposed to a particular digital record of the occurrence). In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make the occurrenceID globally unique.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/occurrenceID
+          
+        
+        
+          occurrenceStatus
+          A statement about the presence or absence of a Taxon at a Location.
+          
+            
+              
+                
+                  A statement about the presence or absence of a Taxon at a Location.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/occurrenceStatus
+          
+        
+        
+          scientificName
+          NA
+          The full scientific name, with authorship and date information if known. When forming part of an Identification, this should be the name in lowest level taxonomic rank that can be determined. This term should not contain identification qualifications, which should instead be supplied in the IdentificationQualifier term.
+          
+            
+              
+                
+                  The full scientific name, with authorship and date information if known. When forming part of an Identification, this should be the name in lowest level taxonomic rank that can be determined. This term should not contain identification qualifications, which should instead be supplied in the IdentificationQualifier term.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/scientificName
+          
+        
+        
+          scientificNameID
+          NA
+          An identifier for the nomenclatural (not taxonomic) details of a scientific name.
+          
+            
+              
+                
+                  An identifier for the nomenclatural (not taxonomic) details of a scientific name.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/scientificNameID
+          
+        
+        
+          taxonID
+          NA
+          An identifier for the set of taxon information (data associated with the Taxon class). May be a global unique identifier or an identifier specific to the data set.
+          
+            
+              
+                
+                  An identifier for the set of taxon information (data associated with the Taxon class). May be a global unique identifier or an identifier specific to the data set.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/taxonID
+          
+        
+        
+          kingdom
+          The full scientific name of the kingdom in which the taxon is classified.
+          
+            
+              
+                
+                  The full scientific name of the kingdom in which the taxon is classified.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/kingdom
+          
+        
+      
+      28892
+    
+    
+      extendedmeasurementorfact
+      DwC-A Extended Measurement Or Fact Table
+      
+        extendedmeasurementorfact.csv
+        9794359
+        
+          
+            text/csv
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/edi/988/8/f616903aa9a2592cb3082cb3b9525270
+          
+        
+      
+      
+        http://purl.obolibrary.org/obo/IAO_0000136
+        http://rs.tdwg.org/dwc/terms/MeasurementOrFact
+      
+      
+        
+          id
+          Row identifier
+          
+            
+              
+                
+                  Row identifier
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+        
+        
+          measurementID
+          An identifier for the MeasurementOrFact (information pertaining to measurements, facts, characteristics, or assertions). May be a global unique identifier or an identifier specific to the data set.
+          
+            
+              
+                
+                  An identifier for the MeasurementOrFact (information pertaining to measurements, facts, characteristics, or assertions). May be a global unique identifier or an identifier specific to the data set.
+                
+              
+            
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/measurementID
+          
+        
+        
+          measurementType
+          The nature of the measurement, fact, characteristic, or assertion.
+          
+            
+              
+                
+                  The nature of the measurement, fact, characteristic, or assertion.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/measurementType
+          
+        
+        
+          measurementTypeID
+          The identifier of the measurementType as defined by a controlled vocabulary.
+          
+            
+              
+                
+                  The identifier of the measurementType as defined by a controlled vocabulary.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+        
+        
+          measurementValue
+          The value of the measurement, fact, characteristic, or assertion.
+          
+            
+              
+                number
+              
+              
+                real
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/measurementValue
+          
+        
+        
+          measurementUnit
+          The units associated with the measurementValue.
+          
+            
+              
+                
+                  The units associated with the measurementValue.
+                
+              
+            
+          
+          
+            NA
+            Missing value
+          
+          
+            http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType
+            http://rs.tdwg.org/dwc/terms/measurementUnit
+          
+        
+        
+          measurementUnitID
+          The identifier of the measurementUnit as defined by a controlled vocabulary.
+          
+            
+              
+                
+                  The identifier of the measurementUnit as defined by a controlled vocabulary.
+                
+              
+            
+          
+        
+      
+      44955
+    
+    
+      meta
+      The meta file associated with this dataset
+      
+        meta.xml
+        2928
+        
+          
+            text/xml
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/edi/988/8/e9a23cbc455158951716b440c3d165e0
+          
+        
+      
+      unknown
+    
+  
