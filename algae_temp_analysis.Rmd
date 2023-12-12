@@ -52,6 +52,8 @@ santa_barbara <- st_read(here("data", "tl_2019_06083_faces", "tl_2019_06083_face
 sst <- readr::read_csv(here("data", "sst", "sst_original_data.csv"))
 ```
 
+## Linear Regression for Sea Surface Temp and Date (15 Years)
+
 ```{r}
 sst_filter <- sst %>%
   mutate(year = format(date, "%Y"))
@@ -66,8 +68,8 @@ slope <- coef(linear_model)[2]
 
 #we've all see this general trend, showing seasonal oscillations
 ggplot(data = updated_sst, aes(x = date, y = temp)) +
-  geom_point(color = "#fa8948") +
-  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  geom_point(color = "#726161", size = 0.25) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
   labs(x = "Time", 
        y = "Sea Surface Temperature (°C)") + 
   ggtitle("Sea Surface Temperature Trend Over the Last 15 Years")
@@ -77,17 +79,16 @@ ggplot(data = updated_sst, aes(x = date, y = temp)) +
 summary(lm(temp ~ date, data = sst_filter))
 ```
 
-
 ```{r}
 # Random exploration 
-sst_ma <- sst_filter %>% mutate(ma = slider::slide_dbl(temp, mean,
-                .before = 2, .after = 2, .complete = TRUE))
+#sst_ma <- sst_filter %>% mutate(ma = slider::slide_dbl(temp, mean,
+                #.before = 2, .after = 2, .complete = TRUE))
 
 # Plot the original time series
-ggplot() +
-  geom_line(data = sst_filter, aes(x = date, y = temp), color = "blue") +
-  geom_line(data = sst_ma, aes(x = date, y = ma), color = "red") +
-  labs(title = "Time Series with Moving Average")
+#ggplot() +
+  #geom_line(data = sst_filter, aes(x = date, y = temp), color = "blue") +
+  #geom_line(data = sst_ma, aes(x = date, y = ma), color = "red") +
+  #labs(title = "Time Series with Moving Average")
 
 ```
 
@@ -95,20 +96,35 @@ ggplot() +
 acf(sst_filter$temp, lag.max=12)
 ```
 
-
 ```{r}
-sst_ma <- sst_ma %>%
-  mutate(datetime = as_datetime(sst_filter$date))
+#sst_ma <- sst_ma %>%
+  #mutate(datetime = as_datetime(sst_filter$date))
 
-df_averaged <- sst_ma %>%
-  group_by(datetime) %>%
-  summarise(mean_value = mean(temp))
+#df_averaged <- sst_ma %>%
+  #group_by(datetime) %>%
+  #summarise(mean_value = mean(temp))
 
 
 #decomp = as_tsibble(df_averaged)
 
-class(df_averaged$mean_values)
+#class(df_averaged$mean_values)
 ```
+
+## Wrangling - sea surface temp data
+
+-   changed date to datetime
+
+-   got rid of na
+
+-   arranged by index (date)
+
+-   added index and temp to sst_filter df
+
+-   selected for site1 (stearns warf) for SST1
+
+-   added index to SST_filter 1
+
+-   omitted NA for SST filter
 
 ```{r}
 sst_filter <- sst_filter %>%
@@ -138,7 +154,16 @@ sst_filter1 <- sst_filter1 %>%
   mutate(index = as.Date(date),
          temp = as.numeric(temp))
 
+
 ```
+
+## Wrangling algae data
+
+-   grouped by pseudo nitxschia seriata group
+
+-   selected for stearns warf
+
+-   
 
 ```{r}
 names_algae <- algal_occurence %>%
@@ -160,7 +185,9 @@ join <- join[complete.cases(join$decimalLatitude, join$decimalLongitude), ]
 join_sf <- st_as_sf(join, coords = c("decimalLatitude", "decimalLongitude"), crs = 4326)
 
 ggplot(data = join_stearns, aes(x = eventDate, y = organismQuantity)) +
-  geom_point()
+  geom_point() +
+  
+  
 
 
 ```
@@ -181,13 +208,13 @@ ggplot(data = join_stearns, aes(x = eventDate, y = organismQuantity)) +
   #as_tsibble(index = y_m)
   
 ```
+
 ```{r}
 date_join_stearns <- date_join_stearns %>%
   mutate(y_m = yearmonth(date)) %>%
   filter(!is.na(date))
 
 ```
-
 
 ```{r}
 decomp_stearn <- date_join_stearns %>%
@@ -199,14 +226,17 @@ decomp_stearn <- date_join_stearns %>%
   as_tsibble(index = y_m)
 ```
 
-
 ```{r}
 decomp_stearn %>% model(
     STL(total_quant)
   ) %>%
   components() %>%
   autoplot()+
-  labs(title = "stearn")
+  labs(title = "Stearns Warf, S")
+```
+
+```{r}
+ggplot(data = date_join_stearns, aes(x = ))
 ```
 
 ```{r}
@@ -215,7 +245,15 @@ total_data <- left_join(date_join_stearns, decomp_stearn, by = "y_m")
 
 ```{r}
 ggplot(data = total_data, aes(x = temp, y = total_quant)) +
-  geom_point()
+  geom_line()
+```
+
+```{r}
+summary(lm(organismQuantity ~ date, data = date_join_stearns))
+```
+
+```{r}
+summary(lm(organismQuantity ~ y_m, data = date_join_stearns))
 ```
 
 ```{r}
@@ -223,9 +261,92 @@ summary(lm(total_quant ~ y_m, data = decomp_stearn))
 ```
 
 ```{r}
-summary(lm(total_quant ~ temp, data = total_data))
+summary(lm(organismQuantity ~ y_m + temp, data = date_join_stearns))
 ```
 
+```{r}
+summary(lm(total_quant ~ temp, data = total_data))
+
+```
+
+```{r}
+
+#mod <- lm(organismQuantity ~ temp + year, data = date_join_stearns)
+
+date_join_stearns %>% 
+  ggplot(aes(x = temp, y = organismQuantity, color = year)) +
+  geom_point() +
+  geom_line(data = augment(mod), aes(y = .fitted, color = year)) + 
+  labs(x = "Engine Displacement, in litres",
+       y = "Highway Miles per gallon") +
+  scale_colour_discrete("year")
+```
+
+```{r}
+ggplot(data = date_join_stearns, aes(x = temp)) +
+  geom_histogram()
+```
+
+```{r}
+date_join_stearns %>%
+  group_by(y_m) %>%
+  summarize(average_cells_per_liter = mean(organismQuantity, na.rm = TRUE))
+
+```
+
+```{r}
+stearns_15 %>%
+  group_by(y_m) %>%
+  summarize(average_cells_per_liter = mean(organismQuantity, na.rm = TRUE))
+
+```
+
+```{r}
+stearns_23 <- date_join_stearns %>%
+  filter(year == "2022")
+
+stearns_23 %>%
+  group_by(y_m) %>%
+  summarize(average_cells_per_liter = mean(organismQuantity, na.rm = TRUE))
+
+
+```
+
+```{r}
+
+acf(decomp_stearn$total_quant, lag.max=52)
+
+```
+
+```{r}
+res = feols(organismQuantity ~ temp + y_m, date_join_stearns)
+# You can specify clustered standard-errors in summary:
+summary(res, cluster = ~Species)res = feols(Sepal.Length ~ Sepal.Width + Petal.Length, iris)
+# You can specify clustered standard-errors in summary:
+summary(res, cluster = ~Species)
+```
+
+```{r}
+date_join_stearns <- date_join_stearns %>%
+  arrange(y_m) %>%
+  mutate(lagged_temp = lag(temp, 1))
+
+# Plot the lagged effect
+ggplot(date_join_stearns, aes(x = lagged_temp, y = organismQuantity)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Lagged Temperature", y = "Number of Algae") +
+  ggtitle("Lagged Effect of Temperature on Algae Growth")
+```
+
+```{r}
+date_join_stearns <- date_join_stearns %>%
+  mutate(year = format(y_m, "%Y"))
+```
+
+```{r}
+ggplot(data = date_join_stearns, aes(x = y_m ))
+```
 
 ```{r}
 #California data wrangling 
@@ -252,5 +373,36 @@ ca_counties <- ggplot(data = ca_county) +
   coord_quickmap()
 
 ca_counties
+
 ```
 
+```{r}
+
+stearns_15 <- date_join_stearns %>%
+  filter(year == "2015")
+
+
+stearns_15 <- stearns_15 %>%
+  mutate(month = format(date, "%m"))
+
+#ggplot(data = stearns_15, aes(x = ))
+
+
+
+```
+
+```{r}
+ggplot(data = stearns_15, aes(x = date, y = organismQuantity)) +
+  geom_point()
+```
+
+```{ggplot(data = stearns_15, aes(x = y_m)) +}
+  geom_line(aes(y = organismQuantity, color = "Line 1"), size = 1.5) +
+  geom_line(aes(x = temp, y = organismQuantity, color = "Line 2"), size = 1.5) +
+  labs(title = "Two Lines with Different X Variables") +
+  xlab("Common X-axis Label") +
+  ylab("Y-axis Label") +
+  scale_color_manual(values = c("Line 1" = "blue", "Line 2" = "red"))
+
+
+```
