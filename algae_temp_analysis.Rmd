@@ -58,12 +58,19 @@ sst_filter <- sst %>%
 
 updated_sst <- sst_filter %>%
   filter(year >= 2007 & year <= 2022)
-
 ```
 
 ```{r}
+linear_model <- lm(temp ~ date, data = updated_sst)
+slope <- coef(linear_model)[2]
+
+#we've all see this general trend, showing seasonal oscillations
 ggplot(data = updated_sst, aes(x = date, y = temp)) +
-  geom_point()
+  geom_point(color = "#fa8948") +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(x = "Time", 
+       y = "Sea Surface Temperature (°C)") + 
+  ggtitle("Sea Surface Temperature Trend Over the Last 15 Years")
 ```
 
 ```{r}
