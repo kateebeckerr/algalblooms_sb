@@ -1,13 +1,51 @@
 ---
-title: "algalblooms_analysis"
+title: "Analysis of Algal Blooms in Santa Barbara, CA"
 author: "Kate Becker"
 date: "2023-12-08"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Does Seasonality Have an Effect on Pseudo-nitzschia Algal Abundance and Distribution?
+
+![](images/1800.jpg.webp)
+
+In the last few weeks, Santa Barbara has seen an unprecedented number of marine mammals washing up on their shores. Previous research has suggested that a particular algal species is responsible, Pseudo-nitzschia. This particular species produces domoic acid, a neurotoxin that causes seizures, brain damage and death in marine mammal. These blooms can be greatly enhanced by run off, eutrophication, and El Nino cycling where strong upwelling years foster bloom all of which are occurring right now in Santa Barbara. These reports have also been documented in coastal waters along the West Coast, Gulf of Mexico, and in the Gulf of Maine affecting all animals of the food web.
+
+The motivation for this study was formed from the questions surrounding these blooms. What is causing them? Can we predict when they will occur next? Can we prevent them? What conditions allow this species to thrive?
+
+For more information regarding the data, workflow, and reproducibility of this project please see the attached Git hub link: <https://github.com/kateebeckerr/algalblooms_sb>
+
+## Data Descriptors: 
+
+1.  **Algal Events, Occurrences, and Measure**
+
+(2022). California Harmful Algal Bloom Monitoring and Alert Program Data. EDI Repository.[ https://portal.edirepository.org/nis/metadataviewer?packageid=edi.988.8](https://portal.edirepository.org/nis/metadataviewer?packageid=edi.988.8))
+
+Relevant Variables: 
+
+-   Location id (Selected for Stearns Wharf)
+
+-   Organism scientific name
+
+-   Organism Quantity (cells/L)
+
+2.   **Sea Surface Temperature in Santa Barbara**
+
+    Santa Barbara Coastal LTER, Kui, Li. (2023). Daily sea surface temperature in Santa Barbara channel between 1982 and 2021. EDI Repository. URL[ https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=161](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=161))
+
+    Relevant Variables:
+
+    -   Date (2007 -\> 2020)
+
+    -   Site (SITE 1 Santa Barbara)
+
+    -   Temperature ([°](https://www.degreesymbol.net/)C)
+
+    -   Latitude 
+
+    -   Longitude
+
+## Relvant Libraries and Functions
 
 ```{r}
 library(ggplot2)
@@ -35,8 +73,13 @@ library(feasts)
 library(tmap)
 library(zoo)
 library(spData)
-
+library(purrr)
+library(forcats)
+library(readr)
+library(gt)
 ```
+
+## Setting The Working Directory
 
 ```{r}
 rm(list = ls())
@@ -44,365 +87,207 @@ here::i_am("algae_temp_analysis.Rmd")
 setwd(here())
 ```
 
+## Data Read In
+
 ```{r}
 algal_events <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/edi/event.csv")
 algal_measure <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/edi/extendedmeasurementorfact.csv")
 algal_occurence <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/edi/occurrence.csv")
-santa_barbara <- st_read(here("data", "tl_2019_06083_faces", "tl_2019_06083_faces.shp"))
-sst <- readr::read_csv(here("data", "sst", "sst_original_data.csv"))
+sst <- read_csv("/Users/katebecker/Documents/Bren/Fall_Q/EDS_222/ final_proj/algalblooms_sb/data/sst/sst_original_data.csv")
 ```
 
-## Linear Regression for Sea Surface Temp and Date (15 Years)
+# Analysis 
+
+## Data Exploration 
+
+```{r}
+#Algal Events 
+#head(algal_events)
+#shape(algal_events)
+#class(algal_events)
+
+#Algal Meausre
+#head(algal_measure)
+#shape(algal_measure)
+#class(algal_measure)
+
+
+# Algal Occurence
+#shape(algal_occurence)
+#head(algal_occurence)
+#class(algal_measure)
+#shape(algal_occurence)
+
+#SST
+#head(sst)
+#class(sst)
+#shape(sst)
+#class(sst)
+  
+```
+
+## Data Wrangling 
+
+### Algae Data
+
+Grouping by organism and filtering for the toxic algae Pseudo nitzschia and specific location will also be filtered for "Stearns Wharf".
+
+```{r}
+names_algae <- algal_occurence %>%
+  group_by(organismName) %>% #grouping by organism name
+  na.omit() #omitting na
+
+pseudo_algae <- algal_occurence %>%
+  filter(organismName == "Pseudo_nitzschia_seriata_group") #filter for toxic algal species
+
+join <- left_join(pseudo_algae, algal_events, by = "id") #left join algal_events into pseuo_algae by ID
+
+join_stearns <- join %>%
+  filter(locationID == "HABs-StearnsWharf") %>% #filter for location ID of Stearns Wharf in SB
+  mutate(year = format(eventDate, "%Y")) #Create a year column by extracting it from eventDate variable
+
+```
+
+
+
+### SST Data
+
+Filtering for data between the years 2007 and 2022 as well as for "SITE1" Stearns Wharf
 
 ```{r}
 sst_filter <- sst %>%
-  mutate(year = format(date, "%Y"))
+  mutate(year = format(date, "%Y")) #adds a new column named year to the sst dataframe by extracting the year value from date 
 
-updated_sst <- sst_filter %>%
+updated_sst <- sst_filter %>% #creates a new df filtering only rows where year column is greater than or equal to 2007 and less than or equal to 2022
   filter(year >= 2007 & year <= 2022)
+
+sst_filter <- sst_filter %>%
+  mutate(index = as.Date(date)) #adds a new column, index, which is created by converting the date column to a date object
+
+sst_filter <- na.omit(sst_filter) #omits na
+
+sst_filter <- sst_filter %>%
+  arrange(index) #sorts dataframe by index column
+
+sst_filter <- sst_filter %>%
+  mutate(index = as.Date(date),
+         temp = as.numeric(temp)) #converting temp column to numeric
+
+#Repeats steps but for SITE1 exlusively 
+sst_site1 <- sst_filter %>%
+  filter(site == "SITE1") #filtering for SITE1 (Stearns Warf)
+
+sst_filter1 <- sst_site1 %>%
+  mutate(index = as.Date(date))  #adds a new column, index, which is creaed by converting date column to a date object
+
+sst_filter1 <- na.omit(sst_filter1) #omits na
+
+sst_filter <- sst_filter1 %>%
+  arrange(index) #sorts df by index column
+
+sst_filter1 <- sst_filter1 %>%
+  mutate(index = as.Date(date),
+         temp = as.numeric(temp)) #converting temp into a numeric
 ```
 
+## Joining Data
+
 ```{r}
-linear_model <- lm(temp ~ date, data = updated_sst)
-slope <- coef(linear_model)[2]
+date_join_stearns <- left_join(join_stearns, updated_sst, by ="year") #join into join_stearns by id
+
+join <- join[complete.cases(join$decimalLatitude, join$decimalLongitude), ] #filters rows in join dataframe whre both lat and long are not missing
+join_sf <- st_as_sf(join, coords = c("decimalLatitude", "decimalLongitude"), crs = 4326) #converts join df into a spatial feature and uses crs 4326
+
+date_join_stearns <- date_join_stearns %>%
+  mutate(y_m = yearmonth(date)) %>% #adds a y_m columm representing year and month of the date column 
+  filter(!is.na(date)) #filters out rows where date is not missing 
+
+```
+
+## Data Exploration
+
+### Plotting Temp and Date Relationship
+
+```{r}
+linear_model <- lm(temp ~ date, data = updated_sst) #fits a linear model
+slope <- coef(linear_model)[2] #extracts slope coefficient for data variable from linear model 
 
 #we've all see this general trend, showing seasonal oscillations
 ggplot(data = updated_sst, aes(x = date, y = temp)) +
   geom_point(color = "#726161", size = 0.25) +
-  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") + #adds a treadline to plot using linear model 
   labs(x = "Time", 
        y = "Sea Surface Temperature (°C)") + 
   ggtitle("Sea Surface Temperature Trend Over the Last 15 Years")
 ```
 
+Sea surface temperature over the last 15 years shows a prominent trend. There's clear seasonality and a steady upward trend likely to continue in the following years.
+
+## Statistical Analysis 
+
+H0: Seasonality does affect algal bloom abundance and distribution
+
+HA: Seasonality does not affect algal bloom abundance and Distribution
+
+### Linear Regression
+
 ```{r}
 summary(lm(temp ~ date, data = sst_filter))
 ```
 
-```{r}
-# Random exploration 
-#sst_ma <- sst_filter %>% mutate(ma = slider::slide_dbl(temp, mean,
-                #.before = 2, .after = 2, .complete = TRUE))
+A p-value of 2.2×10−162.2×10−16 is extremely small and essentially zero. In statistical hypothesis testing, a common significance level (alpha) is 0.05. If the p-value is less than 0.05, the null hypothesis is typically rejected, suggesting that there is evidence to support the alternative hypothesis. In this case, with a p-value much smaller than 0.05 (specifically, 2.2×10−162.2×10−16), it indicates strong evidence against the null hypothesis. You would generally conclude that there is a statistically significant relationship between the independent variable(s) in your linear regression model and the dependent variable but this value and the coefficients don't correlate to the rrange of this data.
 
-# Plot the original time series
-#ggplot() +
-  #geom_line(data = sst_filter, aes(x = date, y = temp), color = "blue") +
-  #geom_line(data = sst_ma, aes(x = date, y = ma), color = "red") +
-  #labs(title = "Time Series with Moving Average")
+In summary, based on the p-value provided we can reject null hypothesis, supporting the idea that there is a statistically significant relationship in the linear regression model. Unfortunately, due to how small the p-value is it should cause pause.
 
-```
+### Decomposition
 
-```{r}
-acf(sst_filter$temp, lag.max=12)
-```
-
-```{r}
-#sst_ma <- sst_ma %>%
-  #mutate(datetime = as_datetime(sst_filter$date))
-
-#df_averaged <- sst_ma %>%
-  #group_by(datetime) %>%
-  #summarise(mean_value = mean(temp))
-
-
-#decomp = as_tsibble(df_averaged)
-
-#class(df_averaged$mean_values)
-```
-
-## Wrangling - sea surface temp data
-
--   changed date to datetime
-
--   got rid of na
-
--   arranged by index (date)
-
--   added index and temp to sst_filter df
-
--   selected for site1 (stearns warf) for SST1
-
--   added index to SST_filter 1
-
--   omitted NA for SST filter
-
-```{r}
-sst_filter <- sst_filter %>%
-  mutate(index = as.Date(date))
-
-sst_filter <- na.omit(sst_filter)
-
-sst_filter <- sst_filter %>%
-  arrange(index)
-
-sst_filter <- sst_filter %>%
-  mutate(index = as.Date(date),
-         temp = as.numeric(temp))
-
-sst_site1 <- sst_filter %>%
-  filter(site == "SITE1")
-
-sst_filter1 <- sst_site1 %>%
-  mutate(index = as.Date(date))
-
-sst_filter1 <- na.omit(sst_filter1)
-
-sst_filter <- sst_filter1 %>%
-  arrange(index)
-
-sst_filter1 <- sst_filter1 %>%
-  mutate(index = as.Date(date),
-         temp = as.numeric(temp))
-
-
-```
-
-## Wrangling algae data
-
--   grouped by pseudo nitxschia seriata group
-
--   selected for stearns warf
-
--   
-
-```{r}
-names_algae <- algal_occurence %>%
-  group_by(organismName) %>%
-  na.omit()
-
-pseudo_algae <- algal_occurence %>%
-  filter(organismName == "Pseudo_nitzschia_seriata_group")
-
-join <- left_join(pseudo_algae, algal_events, by = "id")
-
-join_stearns <- join %>%
-  filter(locationID == "HABs-StearnsWharf") %>%
-  mutate(year = format(eventDate, "%Y"))
-
-date_join_stearns <- left_join(join_stearns, updated_sst, by ="year")
-
-join <- join[complete.cases(join$decimalLatitude, join$decimalLongitude), ]
-join_sf <- st_as_sf(join, coords = c("decimalLatitude", "decimalLongitude"), crs = 4326)
-
-ggplot(data = join_stearns, aes(x = eventDate, y = organismQuantity)) +
-  geom_point() +
-  
-  
-
-
-```
-
-```{r}
-#ggplot() +
-  #geom_line(data = stearns_ma, aes(x = eventDate, y = organismQuantity), color = "blue") +
-  #geom_line(data = stearns_ma, aes(x = eventDate, y = ma), color = "red") +
-  #labs(title = "Time Series with Moving Average")
-
-#class(stearns_ma$eventDate)
-
-#decomp_stearn <- date_join_stearns %>%
-  #mutate(y_m = yearmonth(date)) %>%
-  #group_by(y_m) %>%
-  #summarise(total_quant = sum(organismQuantity, na.rm = TRUE)) %>%
-  #mutate(total_quant = )
-  #as_tsibble(index = y_m)
-  
-```
-
-```{r}
-date_join_stearns <- date_join_stearns %>%
-  mutate(y_m = yearmonth(date)) %>%
-  filter(!is.na(date))
-
-```
+Isolating each component of the time series visually and quantitatively
 
 ```{r}
 decomp_stearn <- date_join_stearns %>%
-  filter(!is.na(date)) %>%
-  mutate(y_m = yearmonth(date)) %>%
-  group_by(y_m) %>%
-  summarise(total_quant = sum(organismQuantity, na.rm = TRUE)) %>%
-  mutate(total_quant = na.approx(total_quant)) %>%
-  as_tsibble(index = y_m)
+  filter(!is.na(date)) %>%  #filters out where date is not missing
+  mutate(y_m = yearmonth(date)) %>% #add a new column y_m representing year and month from date column
+  group_by(y_m) %>% #groups data by year and month
+  summarise(total_quant = sum(organismQuantity, na.rm = TRUE)) %>% #calculates total quantity of organism for each group ignoring missing values
+  mutate(total_quant = na.approx(total_quant)) %>% #interpolates missing values in total_quant column
+  as_tsibble(index = y_m) #converts data to a tsibble
 ```
 
 ```{r}
-decomp_stearn %>% model(
+decomp_stearn %>% model( #specifies the STL decomposition time series model 
     STL(total_quant)
   ) %>%
-  components() %>%
-  autoplot()+
-  labs(title = "Stearns Warf, S")
+  components() %>% #extracts components (trend, seasonality, and remainder) from decomposition
+  autoplot() + #creates a visualization
+  labs(title = "Stearns Warf, Santa Barbara")
 ```
 
-```{r}
-ggplot(data = date_join_stearns, aes(x = ))
-```
+\*Data ends in 2022 so we can only infer what the trend looks like as it approaches 2024
 
-```{r}
-total_data <- left_join(date_join_stearns, decomp_stearn, by = "y_m")
-```
+In 2015, the US west coast suffered the worst, on record, domoic event and this is evident in the prominent spike shown in this graph at the 2015 time stamp. This suggests a correlation between organism quantity and time of year. This graph also shows clear seasonality with a peculiar increase in magnitude of the season_year oscillations after 2015. It should also be noted that the residuals show a general trend which suggests that there are other drivers to this analysis that aren't accounted for. Finally, after examining the size of the grey bars, the long run trend and the residuals appear to be important in driving the overall variation in algae count.
 
-```{r}
-ggplot(data = total_data, aes(x = temp, y = total_quant)) +
-  geom_line()
-```
-
-```{r}
-summary(lm(organismQuantity ~ date, data = date_join_stearns))
-```
-
-```{r}
-summary(lm(organismQuantity ~ y_m, data = date_join_stearns))
-```
-
-```{r}
-summary(lm(total_quant ~ y_m, data = decomp_stearn))
-```
-
-```{r}
-summary(lm(organismQuantity ~ y_m + temp, data = date_join_stearns))
-```
-
-```{r}
-summary(lm(total_quant ~ temp, data = total_data))
-
-```
-
-```{r}
-
-#mod <- lm(organismQuantity ~ temp + year, data = date_join_stearns)
-
-date_join_stearns %>% 
-  ggplot(aes(x = temp, y = organismQuantity, color = year)) +
-  geom_point() +
-  geom_line(data = augment(mod), aes(y = .fitted, color = year)) + 
-  labs(x = "Engine Displacement, in litres",
-       y = "Highway Miles per gallon") +
-  scale_colour_discrete("year")
-```
-
-```{r}
-ggplot(data = date_join_stearns, aes(x = temp)) +
-  geom_histogram()
-```
-
-```{r}
-date_join_stearns %>%
-  group_by(y_m) %>%
-  summarize(average_cells_per_liter = mean(organismQuantity, na.rm = TRUE))
-
-```
-
-```{r}
-stearns_15 %>%
-  group_by(y_m) %>%
-  summarize(average_cells_per_liter = mean(organismQuantity, na.rm = TRUE))
-
-```
-
-```{r}
-stearns_23 <- date_join_stearns %>%
-  filter(year == "2022")
-
-stearns_23 %>%
-  group_by(y_m) %>%
-  summarize(average_cells_per_liter = mean(organismQuantity, na.rm = TRUE))
-
-
-```
-
-```{r}
-
-acf(decomp_stearn$total_quant, lag.max=52)
-
-```
-
-```{r}
-res = feols(organismQuantity ~ temp + y_m, date_join_stearns)
-# You can specify clustered standard-errors in summary:
-summary(res, cluster = ~Species)res = feols(Sepal.Length ~ Sepal.Width + Petal.Length, iris)
-# You can specify clustered standard-errors in summary:
-summary(res, cluster = ~Species)
-```
+## Multiple Linear Regression
 
 ```{r}
 date_join_stearns <- date_join_stearns %>%
-  arrange(y_m) %>%
-  mutate(lagged_temp = lag(temp, 1))
+  mutate(year = format(y_m, "%Y")) #extracts year from y_m  column
 
-# Plot the lagged effect
-ggplot(date_join_stearns, aes(x = lagged_temp, y = organismQuantity)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Lagged Temperature", y = "Number of Algae") +
-  ggtitle("Lagged Effect of Temperature on Algae Growth")
+mod <- lm(organismQuantity ~ temp + year, data = date_join_stearns) #fits a linear regression model where organism quantity is dependent and temp and year are independent variables 
+summary(mod) #summary statistics
 ```
+
+The p-value remains the same and the coefficients again don't make much sense in terms of the data making it difficult to accept or reject the null.
+
+## Autocorrelation
+
+In order to extract insights into seasonality and periodicity in time series data, Autocorrelation works well. Interpretation of the ACF plot involves examining the heights and patterns of the bars or spikes. The bars that extend beyond the shaded region indicate statistically significant correlations. Interpretation of this provides a graphical representation of how the values of a time series are correlated with their own past values at different lags. By specifying **`lag.max = 52`**, it constructs an autocorrelation up to a lag of 52 time points.
 
 ```{r}
-date_join_stearns <- date_join_stearns %>%
-  mutate(year = format(y_m, "%Y"))
+acf(decomp_stearn$total_quant, lag.max=52) 
 ```
 
-```{r}
-ggplot(data = date_join_stearns, aes(x = y_m ))
-```
+To assess the nature of seasonality, a 52 week annual window of time was used. This autocorrelation shows values close to 1 (such as lag 1) showing strong positive correlation with past values. There is also evident toughs and peaks representing a repeating pattern and seasonality as well as statistically significant values concluding that the observed correlations are unlikely due to random chance.
 
-```{r}
-#California data wrangling 
-usa <- map_data("usa") # we already did this, but we can do it again
-ggplot() + 
-  geom_polygon(data = usa, aes(x = long, y = lat, group = group)) + 
-  coord_quickmap()
+## Findings
 
-state <- map_data("state")
-
-ca <- state %>%
-  filter(region %in% c("california"))
-
-ggplot(data = ca) + 
-  geom_polygon(aes(x = long, y = lat, group = group), fill = "palegreen", color = "black") + 
-  coord_quickmap()
-
-counties <- map_data("county")
-ca_county <- counties %>%
-  filter(region == "california")
-
-ca_counties <- ggplot(data = ca_county) + 
-  geom_polygon(aes(x = long, y = lat, group = group), fill = "palegreen", color = "black") + 
-  coord_quickmap()
-
-ca_counties
-
-```
-
-```{r}
-
-stearns_15 <- date_join_stearns %>%
-  filter(year == "2015")
-
-
-stearns_15 <- stearns_15 %>%
-  mutate(month = format(date, "%m"))
-
-#ggplot(data = stearns_15, aes(x = ))
-
-
-
-```
-
-```{r}
-ggplot(data = stearns_15, aes(x = date, y = organismQuantity)) +
-  geom_point()
-```
-
-```{ggplot(data = stearns_15, aes(x = y_m)) +}
-  geom_line(aes(y = organismQuantity, color = "Line 1"), size = 1.5) +
-  geom_line(aes(x = temp, y = organismQuantity, color = "Line 2"), size = 1.5) +
-  labs(title = "Two Lines with Different X Variables") +
-  xlab("Common X-axis Label") +
-  ylab("Y-axis Label") +
-  scale_color_manual(values = c("Line 1" = "blue", "Line 2" = "red"))
-
-
-```
+Although this study shows seasonal trends between temperature and time over the last 15 years, the linear regression models that were run don't provide sufficient p-values or coefficients to confidently accept the null that seasonality does in fact affect algal bloom abundance and distribution. Further analysis is required.
